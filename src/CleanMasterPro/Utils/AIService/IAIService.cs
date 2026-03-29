@@ -1,0 +1,1 @@
+using System; using System.Collections.Generic; using System.Threading.Tasks; namespace CleanMasterPro.Utils.AIService { public interface IAIService { Task<string> AnalyzeFile(string filePath); Task<List<string>> CategorizeFiles(List<string> filePaths); Task<string> GenerateFileName(string filePath); Task<string> GetCleaningSuggestions(string diskPath); bool IsAvailable(); } }

@@ -1,0 +1,1 @@
+using System; namespace CleanMasterPro.Utils.AIService { public static class AIServiceFactory { private static IAIService _aiService; public static IAIService GetAIService() { if (_aiService == null) { _aiService = new MLNetAIService(); } return _aiService; } public static void SetAIService(IAIService service) { _aiService = service; } } }
