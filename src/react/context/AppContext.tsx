@@ -176,7 +176,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       dispatch({ type: 'SET_LOADING', payload: { settings: true } });
       const settings = await settingsApi.getSettings();
-      dispatch({ type: 'SET_SETTINGS', payload: settings });
+      dispatch({ type: 'SET_SETTINGS', payload: { ...settings, language: settings.language as Language } });
     } catch (error) {
       console.error('加载设置失败:', error);
       dispatch({ type: 'SET_ERROR', payload: '加载设置失败' });

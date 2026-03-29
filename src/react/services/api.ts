@@ -259,28 +259,28 @@ export const diskApi = {
 // AI服务API
 export const aiApi = {
   // 分析文件
-  analyzeFile: (filePath: string) => {
+  analyzeFile: (_filePath: string) => {
     return request<string>('/ai/analyze-file', {
       method: 'GET',
     });
   },
 
   // 分类文件
-  categorizeFiles: (filePaths: string[]) => {
+  categorizeFiles: (_filePaths: string[]) => {
     return request<Array<string>>('/ai/categorize-files', {
       method: 'GET',
     });
   },
 
   // 生成文件名
-  generateFileName: (filePath: string) => {
+  generateFileName: (_filePath: string) => {
     return request<string>('/ai/generate-filename', {
       method: 'GET',
     });
   },
 
   // 获取清理建议
-  getCleaningSuggestions: (diskPath: string) => {
+  getCleaningSuggestions: (_diskPath: string) => {
     return request<string>('/ai/cleaning-suggestions', {
       method: 'GET',
     });
