@@ -1,18 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "src/react/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "src/react/dist"
-      }
-    }
-  ],
+  "buildCommand": "cd src/react && npm run build",
+  "outputDirectory": "src/react/dist",
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/react/dist/$1"
+      "dest": "$1"
     }
   ]
 }
