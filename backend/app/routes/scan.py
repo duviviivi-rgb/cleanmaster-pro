@@ -1,80 +1,67 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
 import time
 
-bp = Blueprint('scan', __name__, url_prefix='/api')
+# 创建蓝图
+scan_bp = Blueprint('scan', __name__)
 
-@bp.route('/scan/start', methods=['POST'])
+# 模拟扫描状态
+scan_status = {
+    'is_scanning': False,
+    'progress': 0,
+    'result': None
+}
+
+@scan_bp.route('/api/scan/start', methods=['POST'])
 def start_scan():
     """开始扫描"""
-    try:
-        data = request.json
-        disk = data.get('disk', 'C:')
-        scan_type = data.get('scan_type', 'quick')  # quick, deep, intelligent
-        
-        # 模拟扫描过程
-        time.sleep(2)  # 模拟扫描延迟
-        
-        # 模拟扫描结果
-        scan_result = {
-            "disk": disk,
-            "scan_type": scan_type,
-            "duration": 120,
-            "files_scanned": 15000,
-            "junk_files": [
-                {"path": "C:\\Windows\\Temp", "size": 5000000000, "type": "临时文件"},
-                {"path": "C:\\Users\\User\\AppData\\Local\\Temp", "size": 3000000000, "type": "临时文件"},
-                {"path": "C:\\Users\\User\\Downloads", "size": 10000000000, "type": "下载文件"},
-                {"path": "C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Cache", "size": 2000000000, "type": "浏览器缓存"},
-                {"path": "C:\\Users\\User\\AppData\\Local\\Mozilla\\Firefox\\Profiles\\*.default\\cache", "size": 1500000000, "type": "浏览器缓存"}
-            ],
-            "total_junk_size": 21500000000
-        }
-        
-        return jsonify({
-            "success": True,
-            "data": scan_result
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        })
+    data = request.json
+    disk = data.get('disk')
+    scan_type = data.get('scan_type', 'quick')
+    
+    # 模拟扫描过程
+    scan_status['is_scanning'] = True
+    scan_status['progress'] = 0
+    scan_status['result'] = None
+    
+    # 这里可以添加实际的扫描逻辑
+    
+    return jsonify({'success': True, 'message': '扫描已开始'})
 
-@bp.route('/scan/status', methods=['GET'])
+@scan_bp.route('/api/scan/status', methods=['GET'])
 def get_scan_status():
     """获取扫描状态"""
-    try:
-        # 模拟扫描状态
-        status = {
-            "is_scanning": False,
-            "progress": 100,
-            "current_file": "完成",
-            "estimated_time": 0
+    # 模拟扫描进度
+    if scan_status['is_scanning']:
+        scan_status['progress'] += 10
+        if scan_status['progress'] >= 100:
+            scan_status['is_scanning'] = False
+            scan_status['progress'] = 100
+            # 模拟扫描结果
+            scan_status['result'] = {
+                'junkFiles': 1500,
+                'tempFiles': 800,
+                'cacheFiles': 1200,
+                'totalSize': 25000000000
+            }
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'is_scanning': scan_status['is_scanning'],
+            'progress': scan_status['progress'],
+            'result': scan_status['result']
         }
-        
-        return jsonify({
-            "success": True,
-            "data": status
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        })
+    })
 
-@bp.route('/scan/stop', methods=['POST'])
+@scan_bp.route('/api/scan/stop', methods=['POST'])
 def stop_scan():
     """停止扫描"""
-    try:
-        # 模拟停止扫描
-        time.sleep(1)
-        
-        return jsonify({
-            "success": True,
-            "message": "扫描已停止"
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        })
+    scan_status['is_scanning'] = False
+    scan_status['progress'] = 0
+    scan_status['result'] = None
+    
+    return jsonify({'success': True, 'message': '扫描已停止'})
+
+# 注册蓝图
+from app import app
+app.register_blueprint(scan_bp)

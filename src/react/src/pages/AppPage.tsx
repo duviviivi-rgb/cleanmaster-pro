@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const AppPage: React.FC = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [applications, setApplications] = useState([
+  const [applications, _setApplications] = useState([
     { id: '1', name: 'Google Chrome', version: '123.0.6312.105', publisher: 'Google LLC', installDate: '2026-03-15', size: 1500000000, status: 'healthy', recommendation: 'keep' },
     { id: '2', name: 'Discord', version: '0.0.306', publisher: 'Discord Inc.', installDate: '2026-02-20', size: 800000000, status: 'healthy', recommendation: 'keep' },
     { id: '3', name: 'Steam', version: '1669807911', publisher: 'Valve Corporation', installDate: '2026-01-10', size: 2000000000, status: 'healthy', recommendation: 'keep' },

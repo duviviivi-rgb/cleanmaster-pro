@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
         setLoading(true);
         setError(null);
         const response = await apiService.getDisks();
-        if (response.success) {
+        if (response && response.data) {
           setDisks(response.data);
         } else {
           setError('获取磁盘信息失败');
@@ -45,12 +45,8 @@ const HomePage: React.FC = () => {
 
   const handleScan = async (disk: string) => {
     try {
-      const response = await apiService.startScan(disk, 'quick');
-      if (response.success) {
-        alert('扫描已开始');
-      } else {
-        alert('扫描失败: ' + response.error);
-      }
+      await apiService.startScan(disk, 'quick');
+      alert('扫描已开始');
     } catch (err) {
       alert('扫描失败，请稍后重试');
       console.error('扫描错误:', err);
@@ -59,12 +55,8 @@ const HomePage: React.FC = () => {
 
   const handleClean = async (disk: string) => {
     try {
-      const response = await apiService.startClean(disk, []);
-      if (response.success) {
-        alert('清理已开始');
-      } else {
-        alert('清理失败: ' + response.error);
-      }
+      await apiService.startClean(disk, []);
+      alert('清理已开始');
     } catch (err) {
       alert('清理失败，请稍后重试');
       console.error('清理错误:', err);

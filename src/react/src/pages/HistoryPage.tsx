@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 const HistoryPage: React.FC = () => {
-  const [cleanHistory, setCleanHistory] = useState([
+  const [cleanHistory, _setCleanHistory] = useState([
     { id: '1', timestamp: '2026-04-10 14:30', disk: 'C:', cleanType: '快速扫描', spaceSaved: 25000000000, filesDeleted: 3200, duration: 60 },
     { id: '2', timestamp: '2026-04-09 09:15', disk: 'C:', cleanType: '深度扫描', spaceSaved: 42000000000, filesDeleted: 5800, duration: 120 },
     { id: '3', timestamp: '2026-04-08 18:45', disk: 'D:', cleanType: '智能分析', spaceSaved: 31000000000, filesDeleted: 4500, duration: 90 },
     { id: '4', timestamp: '2026-04-07 12:00', disk: 'C:', cleanType: '快速扫描', spaceSaved: 18000000000, filesDeleted: 2500, duration: 45 },
     { id: '5', timestamp: '2026-04-06 10:30', disk: 'E:', cleanType: '深度扫描', spaceSaved: 56000000000, filesDeleted: 7200, duration: 150 },
   ]);
-  const [analysis, setAnalysis] = useState({
+  const [analysis, _setAnalysis] = useState({
     totalSpaceSaved: 172000000000,
     averageCleanTime: 93,
     mostCleanedType: '深度扫描',

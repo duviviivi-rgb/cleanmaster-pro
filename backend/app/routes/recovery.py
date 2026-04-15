@@ -1,143 +1,115 @@
-from flask import Blueprint, request, jsonify
-import time
+from flask import Blueprint, jsonify, request
 
-bp = Blueprint('recovery', __name__, url_prefix='/api')
+# 创建蓝图
+recovery_bp = Blueprint('recovery', __name__)
 
-@bp.route('/recovery/scan', methods=['POST'])
-def scan_recovery():
+# 模拟可恢复文件数据
+recoverable_files = [
+    { 'id': '1', 'name': 'document.docx', 'path': 'C:\Documents\document.docx', 'size': 2000000, 'deletedDate': '2026-04-10 14:30', 'recoveryChance': 'high' },
+    { 'id': '2', 'name': 'photo.jpg', 'path': 'C:\Pictures\photo.jpg', 'size': 5000000, 'deletedDate': '2026-04-09 09:15', 'recoveryChance': 'medium' },
+    { 'id': '3', 'name': 'video.mp4', 'path': 'C:\Videos\video.mp4', 'size': 50000000, 'deletedDate': '2026-04-08 18:45', 'recoveryChance': 'low' },
+    { 'id': '4', 'name': 'spreadsheet.xlsx', 'path': 'C:\Documents\spreadsheet.xlsx', 'size': 1500000, 'deletedDate': '2026-04-07 12:00', 'recoveryChance': 'high' },
+    { 'id': '5', 'name': 'presentation.pptx', 'path': 'C:\Documents\presentation.pptx', 'size': 3000000, 'deletedDate': '2026-04-06 10:30', 'recoveryChance': 'medium' },
+]
+
+# 模拟扫描状态
+scan_status = {
+    'is_scanning': False,
+    'progress': 0,
+    'result': None
+}
+
+# 模拟恢复状态
+recovery_status = {
+    'is_recovering': False,
+    'progress': 0,
+    'result': None
+}
+
+@recovery_bp.route('/api/recovery/scan', methods=['POST'])
+def scan_recoverable_files():
     """扫描可恢复文件"""
-    try:
-        data = request.json
-        disk = data.get('disk', 'C:')
-        scan_type = data.get('scan_type', 'quick')  # quick, deep
-        
-        # 模拟扫描过程
-        time.sleep(3)  # 模拟扫描延迟
-        
-        # 模拟扫描结果
-        recovery_files = [
-            {
-                "id": "1",
-                "name": "document1.docx",
-                "path": "C:\\Users\\User\\Documents\\",
-                "size": 2000000,
-                "deleted_date": "2026-04-01",
-                "status": "recoverable",
-                "recovery_chance": 95
-            },
-            {
-                "id": "2",
-                "name": "photo1.jpg",
-                "path": "C:\\Users\\User\\Pictures\\",
-                "size": 5000000,
-                "deleted_date": "2026-03-15",
-                "status": "recoverable",
-                "recovery_chance": 85
-            },
-            {
-                "id": "3",
-                "name": "video1.mp4",
-                "path": "C:\\Users\\User\\Videos\\",
-                "size": 50000000,
-                "deleted_date": "2026-03-10",
-                "status": "partially_recoverable",
-                "recovery_chance": 60
-            },
-            {
-                "id": "4",
-                "name": "file1.pdf",
-                "path": "C:\\Users\\User\\Downloads\\",
-                "size": 3000000,
-                "deleted_date": "2026-02-20",
-                "status": "recoverable",
-                "recovery_chance": 75
-            },
-            {
-                "id": "5",
-                "name": "music1.mp3",
-                "path": "C:\\Users\\User\\Music\\",
-                "size": 4000000,
-                "deleted_date": "2026-02-15",
-                "status": "unrecoverable",
-                "recovery_chance": 10
-            }
-        ]
-        
-        return jsonify({
-            "success": True,
-            "data": recovery_files
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        })
+    data = request.json
+    disk = data.get('disk', 'C:')
+    
+    # 模拟扫描过程
+    scan_status['is_scanning'] = True
+    scan_status['progress'] = 0
+    scan_status['result'] = None
+    
+    # 这里可以添加实际的文件恢复扫描逻辑
+    
+    return jsonify({'success': True, 'message': '文件恢复扫描已开始'})
 
-@bp.route('/recovery/start', methods=['POST'])
+@recovery_bp.route('/api/recovery/scan/status', methods=['GET'])
+def get_scan_status():
+    """获取扫描状态"""
+    # 模拟扫描进度
+    if scan_status['is_scanning']:
+        scan_status['progress'] += 10
+        if scan_status['progress'] >= 100:
+            scan_status['is_scanning'] = False
+            scan_status['progress'] = 100
+            scan_status['result'] = recoverable_files
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'is_scanning': scan_status['is_scanning'],
+            'progress': scan_status['progress'],
+            'result': scan_status['result']
+        }
+    })
+
+@recovery_bp.route('/api/recovery/start', methods=['POST'])
 def start_recovery():
     """开始恢复文件"""
-    try:
-        data = request.json
-        files = data.get('files', [])
-        destination = data.get('destination', 'C:\\Recovery')
-        
-        # 模拟恢复过程
-        time.sleep(4)  # 模拟恢复延迟
-        
-        # 模拟恢复结果
-        recovery_result = {
-            "files_recovered": len(files),
-            "destination": destination,
-            "duration": 120,
-            "recovered_files": files
-        }
-        
-        return jsonify({
-            "success": True,
-            "data": recovery_result
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        })
+    data = request.json
+    files = data.get('files', [])
+    destination = data.get('destination', 'C:\Recovery')
+    
+    # 模拟恢复过程
+    recovery_status['is_recovering'] = True
+    recovery_status['progress'] = 0
+    recovery_status['result'] = None
+    
+    # 这里可以添加实际的文件恢复逻辑
+    
+    return jsonify({'success': True, 'message': '文件恢复已开始'})
 
-@bp.route('/recovery/status', methods=['GET'])
+@recovery_bp.route('/api/recovery/status', methods=['GET'])
 def get_recovery_status():
     """获取恢复状态"""
-    try:
-        # 模拟恢复状态
-        status = {
-            "is_recovering": False,
-            "progress": 100,
-            "current_file": "完成",
-            "files_recovered": 5,
-            "estimated_time": 0
+    # 模拟恢复进度
+    if recovery_status['is_recovering']:
+        recovery_status['progress'] += 20
+        if recovery_status['progress'] >= 100:
+            recovery_status['is_recovering'] = False
+            recovery_status['progress'] = 100
+            recovery_status['result'] = {
+                'recoveredFiles': 3,
+                'failedFiles': 2,
+                'destination': 'C:\Recovery'
+            }
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'is_recovering': recovery_status['is_recovering'],
+            'progress': recovery_status['progress'],
+            'result': recovery_status['result']
         }
-        
-        return jsonify({
-            "success": True,
-            "data": status
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        })
+    })
 
-@bp.route('/recovery/stop', methods=['POST'])
+@recovery_bp.route('/api/recovery/stop', methods=['POST'])
 def stop_recovery():
     """停止恢复"""
-    try:
-        # 模拟停止恢复
-        time.sleep(1)
-        
-        return jsonify({
-            "success": True,
-            "message": "恢复已停止"
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        })
+    recovery_status['is_recovering'] = False
+    recovery_status['progress'] = 0
+    recovery_status['result'] = None
+    
+    return jsonify({'success': True, 'message': '文件恢复已停止'})
+
+# 注册蓝图
+from app import app
+app.register_blueprint(recovery_bp)

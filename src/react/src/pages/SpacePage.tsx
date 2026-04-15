@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const SpacePage: React.FC = () => {
   const [selectedDisk, setSelectedDisk] = useState('C:');
-  const [spaceUsage, setSpaceUsage] = useState({
+  const [spaceUsage, _setSpaceUsage] = useState({
     totalSpace: 1000000000000,
     usedSpace: 600000000000,
     freeSpace: 400000000000,

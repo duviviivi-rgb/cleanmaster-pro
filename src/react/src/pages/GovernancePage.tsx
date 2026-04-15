@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const GovernancePage: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
-  const [fileCategories, setFileCategories] = useState([
+  const [fileCategories, _setFileCategories] = useState([
     { name: '文档', count: 120, size: 5000000000, growthRate: 10000000 },
     { name: '图片', count: 500, size: 10000000000, growthRate: 20000000 },
     { name: '视频', count: 50, size: 20000000000, growthRate: 50000000 },
@@ -11,7 +11,7 @@ const GovernancePage: React.FC = () => {
     { name: '应用', count: 30, size: 15000000000, growthRate: 15000000 },
     { name: '其他', count: 800, size: 8000000000, growthRate: 8000000 },
   ]);
-  const [duplicateFiles, setDuplicateFiles] = useState([
+  const [duplicateFiles, _setDuplicateFiles] = useState([
     { groupId: '1', files: ['C:\\Documents\\file1.docx', 'C:\\Downloads\\file1_copy.docx'], size: 2000000 },
     { groupId: '2', files: ['C:\\Pictures\\photo1.jpg', 'C:\\Backup\\photo1_copy.jpg'], size: 5000000 },
     { groupId: '3', files: ['C:\\Videos\\video1.mp4', 'C:\\Movies\\video1_copy.mp4'], size: 50000000 },

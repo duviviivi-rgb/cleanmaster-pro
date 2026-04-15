@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const RecoveryPage: React.FC = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [recoverableFiles, setRecoverableFiles] = useState([
+  const [recoverableFiles, _setRecoverableFiles] = useState([
     { id: '1', name: 'document.docx', path: 'C:\\Documents\\document.docx', size: 2000000, deletedDate: '2026-04-10 14:30', recoveryChance: 'high' },
     { id: '2', name: 'photo.jpg', path: 'C:\\Pictures\\photo.jpg', size: 5000000, deletedDate: '2026-04-09 09:15', recoveryChance: 'medium' },
     { id: '3', name: 'video.mp4', path: 'C:\\Videos\\video.mp4', size: 50000000, deletedDate: '2026-04-08 18:45', recoveryChance: 'low' },

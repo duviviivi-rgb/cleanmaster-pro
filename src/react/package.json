@@ -10,20 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/helper-compilation-targets": "^7.28.6",
+    "autoprefixer": "^10.5.0",
     "axios": "^1.6.7",
+    "caniuse-lite": "^1.0.30001788",
     "chart.js": "^4.4.8",
+    "fraction.js": "^5.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.2",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.5.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",

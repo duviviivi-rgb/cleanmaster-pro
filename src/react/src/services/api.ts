@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 创建axios实例
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const apiService = {
   },
 
   getDiskDetail: async (letter: string) => {
-    return api.get(`/disk/${letter}`);
+    return api.get(`/disks/${letter}`);
   },
 
   // 扫描相关
